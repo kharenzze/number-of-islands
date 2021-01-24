@@ -1,12 +1,33 @@
+use std::usize;
+
 struct Solution;
 
 struct Point {
-    x: i32,
-    y: i32,
+    x: usize,
+    y: usize,
 }
 
+const ZERO:usize = '0' as usize;
+
 struct Game {
-    grid: Vec<Vec<char>>,
+    grid: Vec<Vec<usize>>,
+    dimensions: Point,
+}
+
+impl Game {
+    pub fn new(grid: Vec<Vec<char>>) -> Self {
+        let dim = Point {
+            x: grid.len(),
+            y: grid[0].len(),
+        };
+        let g:Vec<Vec<usize>> = grid.into_iter().map(|line| {
+            line.into_iter().map(|c| (c as usize) - ZERO).collect()
+        }).collect();
+        Self {
+            grid: g,
+            dimensions: dim,
+        }
+    }
 }
 
 impl Solution {
